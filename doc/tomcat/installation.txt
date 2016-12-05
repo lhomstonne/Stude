@@ -1,0 +1,48 @@
+Installation:
+-------------
+
+0) Ensure Tomcat is stopped
+
+1) Generate package with Maven
+
+$ mvn package
+
+2) Deploy the WebApp
+
+Copy target/ShopItemSpringMVC.war to <CATALINA_HOME>/webapps
+
+Unpack it in it's own directory (or Tomcat will do it at startup)
+
+3) Install JDBC driver
+
+Deploy database JDBC drivers to <CATALINA_HOME>/libs
+
+- postgresql-9.3-1104-jdbc41.jar for Postgresql
+- mysql-connector-java-5.1.36.jar for Mysql
+- ojdbc.jar for Oracle
+
+4) Install Datasource (2 options)
+
+option 1 in webapp : Copy datasource context file doc/<database>/context.xml to <CATALINA_HOME>/webapps/ShopItemSpringMVC/META-INF
+
+option 2 in tomcat : Copy datasource context file doc/<database>/ShopItemSpringMVC.xml to <CATALINA_HOME>/conf/Catalina/localhost
+
+5) Start Tomcat with a commmand like :
+
+$ $CATALINA_HOME/bin/catalina.sh run
+
+6) Test DB connection with :
+
+http://localhost:8080/ShopItemSpringMVC/test.jsp
+
+
+DataSource options:
+-------------------
+maxTotal: Maximum number of database connections in pool. Make sure you configure your 
+mysqld max_connections large enough to handle all of your db connections. Set to -1 for no limit.
+
+maxIdle: Maximum number of idle database connections to retain in pool. Set to -1 for no limit.
+See also the DBCP documentation on this and the minEvictableIdleTimeMillis configuration parameter.
+
+maxWaitMillis: Maximum time to wait for a database connection to become available in ms, in this 
+example 10 seconds. An Exception is thrown if this timeout is exceeded.  Set to -1 to wait indefinitely.

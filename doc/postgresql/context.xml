@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource auth="Container"
+		description="Resource reference to a factory for java.sql.Connection instances that may be used for talking to a particular database that is configured in the server.xml file."
+		name="jdbc/SampleDB" type="javax.sql.DataSource"
+		driverClassName="org.postgresql.Driver"
+		url="jdbc:postgresql://leansys-server:5432/test" 
+		username="testuser" 
+		password="userpass" 
+		maxIdle="2"
+		maxWait="5000"
+		maxActive="4" />
+</Context>

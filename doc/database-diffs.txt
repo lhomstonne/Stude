@@ -1,0 +1,51 @@
+Get last inserted ID
+--------------------
+apply in src/main/java/fr/leansys/business/dao/ShopItemDaoImpl.java method save()
+
+mysql : SELECT LAST_INSERT_ID()
+postgresql : SELECT currval('item_sequence')
+oracle : select id.currval from dual
+
+
+Get DB engine version
+---------------------
+apply in src/main/wepapp/test.jsp
+
+mysql : select version() / Field : version()
+postgresql : select version() / Field : version
+oracle : select * from v$version where banner like 'Oracle%' / Field : Banner
+
+
+JDBC Driver
+-----------
+apply in pom.xml (in test deps scope and jetty plugin deps)
+
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>${mysql.version}</version>
+</dependency>
+
+<dependency>
+	<groupId>org.postgresql</groupId>
+	<artifactId>postgresql</artifactId>
+	<version>${postgresql.version}</version>
+</dependency>
+
+<dependency>
+	<groupId>com.oracle</groupId>
+	<artifactId>ojdbc14</artifactId>
+	<version>${oracle.version}</version>
+</dependency>
+
+
+Junit
+-----
+
+Apply correct DB connection settings in src/test/resources/database.properties
+
+
+Jetty plugin
+------------
+
+Apply corresponding jetty.xml to src/main/config

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource auth="Container"
+		description="Resource reference to a factory for java.sql.Connection instances that may be used for talking to a particular database that is configured in the server.xml file."
+		name="jdbc/SampleDB" type="javax.sql.DataSource"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/samples"
+		username="root"
+		password="root"
+		maxIdle="4"
+		maxWaitMillis="5000"
+		maxTotal="10" />
+</Context>

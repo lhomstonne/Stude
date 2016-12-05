@@ -1,0 +1,7 @@
+fr\leansys\business\dao\ShopItemDaoImpl.class
+fr\leansys\business\dao\ShopItemDaoImpl$1.class
+fr\leansys\business\services\ShopItemServiceImpl.class
+fr\leansys\business\dao\ShopItemDao.class
+fr\leansys\business\model\ShopItem.class
+fr\leansys\business\services\ShopItemService.class
+fr\leansys\web\controller\ShopItemController.class

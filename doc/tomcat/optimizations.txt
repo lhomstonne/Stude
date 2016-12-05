@@ -1,0 +1,98 @@
+Tomcat maxThreads configuration
+-------------------------------
+Tomcat maxThreads represents the maximum number of request processing threads to be created by the HTTPConnector.
+
+<Connector port="8080" address="localhost"     
+     maxThreads="250" maxHttpHeaderSize="8192"
+     emptySessionPath="true" protocol="HTTP/1.1"
+     enableLookups="false" redirectPort="8443" acceptCount="100"
+     connectionTimeout="20000" disableUploadTimeout="true" />
+
+
+maxKeepAliveRequests : represents the number of HTTP requests that can handle a TCP connection. 
+Usually between 100 and 200 (SSL , APR / NIO connector) or 1 to disable "Keep Alive" 
+(no SSL BIO connector, strong concurrency)
+
+acceptCount (threads stack - TCP backlog) : typically between 50 and 300
+
+connectionTimeout : The maximum time between two TCP packets , on a HTTP request : 
+between 2000 and 3000 ms is suffisant, even by activating Keep Alive (Default 60000)
+
+Then set disableUploadTimeout to false and increase connectionUploadTimeout value. 
+This value is specified in milli-seconds
+
+connectionUploadTimeout	: Specifies the timeout, in milliseconds, to use while a data upload 
+is in progress. This only takes effect if disableUploadTimeout is set to false.
+
+disableUploadTimeout : This flag allows the servlet container to use a different, usually 
+longer connection timeout during data upload. If not specified, this attribute is set to true 
+which disables this longer timeout.
+
+
+Activate NIO connector
+----------------------
+For best performance, update the protocol for the port 8080 connector in Tomcat's server.xml 
+(<CATALINA_HOME>/config)
+
+<Connector port="8080"
+    protocol="org.apache.coyote.http11.Http11NioProtocol"
+    connectionTimeout="20000"
+    redirectPort="8443" />
+    
+
+Sharing Global Connection Pool
+------------------------------
+
+• Sharing a connection pool
+<GlobalNamingResources>
+	<Resource type="javax.sql.DataSource" name="sharedpool"/>
+</GlobalNamingResources>
+
+• conf/context.xml
+<Context>
+	<ResourceLink global="sharedpool" name="jdbc/DS"/>
+</Context>
+
+• All global defaults can be configured in 
+– conf/context.xml can be overridden by application 
+– conf/web.xml can be overridden by application
+
+
+Access logging settings similar to httpd
+----------------------------------------
+
+• Access Logging can be done using a valve 
+– Valve logs as soon as the request is done 
+– Introspects request and response to generate output
+<Valve className="org.apache.catalina.valves.AccessLogValve"
+	pattern="%h %l %u %t %r %s %b %S %D"
+	directory="${catalina.base}/logs"
+	prefix="tomcat_access_"
+	suffix=".log" /> 
+
+The %D pattern gives the duration of the URL in miliis 
+
+Note: don't let logging unlimited generation, add rotating logging in 
+<CATALINA_HOME>/config/logging.properties 
+
+1catalina.java.util.logging.FileHandler.pattern = ${catalina.base}/logs/catalina.%g.log 
+1catalina.java.util.logging.FileHandler.limit = 20000000
+1catalina.java.util.logging.FileHandler.count = 5
+
+
+Java settings
+-------------
+
+JAVA_HOME = <absolute_path_of_java_installation>/
+
+JAVA_OPTS = -XX:+HeapDumpOnOutOfMemoryError \
+-XX:+CMSPermGenSweepingEnabled \
+-XX:+CMSClassUnloadingEnabled \
+-Xms2048m \
+-Xmx2048m \
+-XX:PermSize=512m \
+-XX:MaxPermSize=512m
+
+Some options are deprecated (like permsize) in Java 8
+
+Override these environment variables or put in <CATALINA_HOME>/bin/catalina.sh script

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure id="Server" class="org.eclipse.jetty.webapp.WebAppContext">
+    <!-- @see https://wiki.eclipse.org/Jetty/Howto/Configure_JNDI_Datasource -->
+    <!-- =========================================================== -->
+    <!-- Container datasources                                       -->
+    <!-- =========================================================== -->
+    <New id="SampleDB" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg>jdbc/SampleDB</Arg>
+        <Arg>
+            <New class="org.postgresql.ds.PGPoolingDataSource">
+                <Set name="ServerName">leansys-server</Set>
+                <Set name="PortNumber">5432</Set>
+                <Set name="DatabaseName">test</Set>
+                <Set name="User">testuser</Set>
+                <Set name="Password">userpass</Set>
+                <Set name="initialConnections">4</Set>
+                <Set name="maxConnections">8</Set>
+            </New>
+        </Arg>
+    </New>
+</Configure>

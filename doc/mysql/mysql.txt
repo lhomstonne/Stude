@@ -1,0 +1,10 @@
+MySQL server setup
+
+sudo bash -c 'cat > /etc/mysql/conf.d/bindaddress.cnf << EOF
+[mysqld]
+bind-address = 0.0.0.0
+EOF'
+
+sudo service mysql restart
+
+mysql -u root -psqladmin

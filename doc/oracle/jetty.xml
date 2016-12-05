@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure id="Server" class="org.eclipse.jetty.webapp.WebAppContext">
+	<!-- @see https://wiki.eclipse.org/Jetty/Howto/Configure_JNDI_Datasource -->
+	<!-- =========================================================== -->
+	<!-- Container datasources                                       -->
+	<!-- =========================================================== -->
+	<New id="SampleDB" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>jdbc/SampleDB</Arg>
+		<Arg>
+			<New class="oracle.jdbc.pool.OracleDataSource">
+				<Set name="DriverType">thin</Set>
+				<Set name="URL">jdbc:oracle:thin:@cgmarw2k:1521:PRODIS</Set>
+				<Set name="User">HGC_DBA</Set>
+				<Set name="Password">admin</Set>
+				<Set name="connectionCachingEnabled">true</Set>
+				<Set name="connectionCacheProperties">
+					<New class="java.util.Properties">
+						<Call name="setProperty">
+							<Arg>MinLimit</Arg>
+							<Arg>5</Arg>
+						</Call>
+						<!-- put the other properties in here too -->
+					</New>
+				</Set>
+			</New>
+		</Arg>
+	</New>
+</Configure>

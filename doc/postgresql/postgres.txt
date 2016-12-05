@@ -1,0 +1,14 @@
+# first connection
+sudo -u postgres psql
+
+# after user creation (pass is userpass)
+psql -h localhost -p 5432 -U testuser test
+
+# allow remote connections (see http://fabzter.com/blog/configuring-postgresql-9-3)
+sudo vi /etc/postgresql/9.3/main/pg_hba.conf
+host all all 192.168.1.1/24 md5
+
+sudo vi /etc/postgresql/9.3/main/postgresql.conf
+listen_addresses = '*'
+
+sudo service postgresql restart
