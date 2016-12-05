@@ -32,9 +32,9 @@ public class ShopItemDaoTest {
     public void testSaveAndDelete() {
         assert dao != null;
         ShopItem item = new ShopItem();
-        //item.setDescription("description");
-        //item.setName("name");
-        //item.setPrice(100);
+        item.setDescription("description");
+        item.setName("name");
+        item.setPrice(100);
         int id = dao.save(item);
         assertTrue(id > 0);
         assertTrue(dao.delete(id));
