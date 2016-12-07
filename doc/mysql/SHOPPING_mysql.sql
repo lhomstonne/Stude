@@ -1,10 +1,3 @@
-DROP DATABASE IF EXISTS samples;
-CREATE DATABASE samples;
-GRANT ALL PRIVILEGES ON samples.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
-flush privileges;
-use mysql;
-update user set host = '%', password=PASSWORD('root') where user='root';
-flush privileges;
 
 use samples;
 create table SHOPPINGITEMS
